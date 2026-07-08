@@ -68,4 +68,13 @@ python evaluate.py --exp-dir experiments/mlic_mscoco/exp1
 
 ### Citation
 ```
+@article{zhu2026multi,
+  title={Multi-Label Image Classification via Contrastive Co-occurrence Learning},
+  author={Zhu, Xuelin and Liu, Jian and Tang, Dongqi and Liu, Weijia and Ge, Jiawei and Liu, Bo and Cao, Jiuxin},
+  journal={IEEE Transactions on Image Processing},
+  year={2026},
+  volume={35},
+  number={},
+  pages={6700-6713}
+}
 ```
