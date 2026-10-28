@@ -20,7 +20,14 @@ from torch.utils.tensorboard import SummaryWriter
 
 from lib.utils import *
 from lib.metrics import *
-from lib.dataset import MLDataset
+from lib.training_protocol import (
+    build_training_datasets,
+    is_strict_improvement,
+    save_best_ema_checkpoint,
+    should_clear_failed_experiment,
+    training_log_interval,
+    validate_finite_map,
+)
 from models.factory import create_model
 
 
@@ -30,8 +37,7 @@ class Trainer(object):
         self.distributed = world_size > 1
         batch_size = cfg.batch_size // world_size if self.distributed else cfg.batch_size
 
-        train_dataset = MLDataset(cfg, cfg.train_path, training=True)
-        val_dataset = MLDataset(cfg, cfg.test_path, training=False)
+        train_dataset, val_dataset = build_training_datasets(cfg)
         if self.distributed:
             self.train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset)
             val_sampler = torch.utils.data.distributed.DistributedSampler(val_dataset)
@@ -67,7 +73,8 @@ class Trainer(object):
         self.voc_ema_mAP = VOCmAP(cfg.num_classes, year='2012', ignore_path=cfg.ignore_path)
 
         self.cfg = cfg
-        self.best_mAP = 0
+        self.best_mAP = None
+        self.best_epoch = None
         self.global_step = 0
         self.notdist_or_rank0 = (not self.distributed) or (self.distributed and rank == 0)
         if self.notdist_or_rank0:
@@ -83,9 +90,15 @@ class Trainer(object):
                 self.train_sampler.set_epoch(epoch)
             self.train(epoch)
             mAP = self.validation(epoch)
-            if self.best_mAP < mAP and self.notdist_or_rank0:
-                torch.save(self.ema_model.state_dict(), self.cfg.ckpt_ema_best_path)
+            mAP = validate_finite_map('EMA val mAP', mAP)
+            if is_strict_improvement(mAP, self.best_mAP):
+                if self.notdist_or_rank0:
+                    if self.cfg.data == 'tobacco':
+                        save_best_ema_checkpoint(self.ema_model, self.cfg, epoch, mAP)
+                    else:
+                        torch.save(self.ema_model.state_dict(), self.cfg.ckpt_ema_best_path)
                 self.best_mAP = mAP
+                self.best_epoch = epoch
                 patience = 0
             else:
                 patience += 1
@@ -114,7 +127,7 @@ class Trainer(object):
             self.lr_scheduler.step()
             self.ema_model.update(self.model)
 
-            if self.global_step % (len(self.train_loader) // 6) == 0 and self.notdist_or_rank0:
+            if self.global_step % training_log_interval(len(self.train_loader)) == 0 and self.notdist_or_rank0:
                 lr = get_lr(self.optimizer)
                 self.writer.add_scalar('Loss/train', loss, self.global_step)
                 self.writer.add_scalar('bce/train', bce, self.global_step)
@@ -154,11 +167,14 @@ class Trainer(object):
             dist.barrier()
         _, mAP = self.voc_mAP.compute()
         _, ema_mAP = self.voc_ema_mAP.compute()
+        mAP = validate_finite_map('model val mAP', mAP)
+        ema_mAP = validate_finite_map('EMA val mAP', ema_mAP)
         if self.notdist_or_rank0:
             self.writer.add_scalar('mAP/val', mAP, self.global_step)
             self.writer.add_scalar('ema_mAP/val', ema_mAP, self.global_step)
+            displayed_best = ema_mAP if self.best_mAP is None else max(ema_mAP, self.best_mAP)
             self.logger.info("VALID [epoch {}] mAP: {:.4f} ema_mAP: {:.4f} best mAP: {:.4f}"
-                             .format(epoch, mAP, ema_mAP, max(ema_mAP, self.best_mAP)))
+                             .format(epoch, mAP, ema_mAP, displayed_best))
 
         return ema_mAP
 
@@ -187,5 +203,5 @@ if __name__ == "__main__":
             main_worker(0, ngpus_per_node, cfg)
     except (Exception, KeyboardInterrupt):
         print(traceback.format_exc())
-        if not os.path.exists(cfg.ckpt_ema_best_path):
+        if should_clear_failed_experiment(cfg) and not os.path.exists(cfg.ckpt_ema_best_path):
             clear_exp(cfg.exp_dir)

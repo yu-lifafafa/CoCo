@@ -1,0 +1,520 @@
+{
+  "archive_sha256": "cc3b7f07525e480ce9421e7c3976953e5eca392aea07b160eb308364ec174938",
+  "baseline_commit": "342c4e35b19fc773ae71565dbe17be70d56bfcdc",
+  "expected_data_manifest_sha256": "ce51205b537c3d1eee28b3d8112ce1edb6454c6f16cd3b441387bff2be2c56b5",
+  "file_count": 102,
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "8fad38749c6d13676e05c985c228f6569c40c85d2795bc5ef1360e4d4b39e7f6",
+      "size": 65
+    },
+    {
+      "path": "README.md",
+      "sha256": "a4d36fbf6a903131d0bcb0716fec561991ce0aa3d2187a7f660e1a2734ad82bb",
+      "size": 2641
+    },
+    {
+      "path": "deploy/environment.yml",
+      "sha256": "f0e83028d1ab21e79dd85e4afa09e575a41284b99243a6b10937aacf98254c87",
+      "size": 220
+    },
+    {
+      "path": "deploy/server_setup.md",
+      "sha256": "340d27b352371671a6758bc965e8b3fa46170ff2a85b307a1481c76a90908242",
+      "size": 9374
+    },
+    {
+      "path": "deploy/verify_deployment.py",
+      "sha256": "318e0002ba261eed954638a5b1aea3225a953feddb9879fe809aaee6ec488b38",
+      "size": 6709
+    },
+    {
+      "path": "docs/superpowers/plans/2026-10-09-coco-tobacco-evaluation.md",
+      "sha256": "fed078cc5c2478f460b58cd7f3e727481474203e57801be7fcf99e9549b1996d",
+      "size": 11522
+    },
+    {
+      "path": "docs/superpowers/plans/2026-10-09-coco-tobacco-training-protocol.md",
+      "sha256": "bd17bb3f31874cee59ebd6cc88b5171c997bede2133bb5f20f64482d45d49ec3",
+      "size": 10310
+    },
+    {
+      "path": "docs/superpowers/plans/2026-10-10-coco-tobacco-gpu-smoke-deployment.md",
+      "sha256": "ad4689f2ddd1c0029f4ba492fdb740f685c979ed0b16f0059772493ac344587c",
+      "size": 15467
+    },
+    {
+      "path": "docs/superpowers/specs/2026-10-09-coco-tobacco-evaluation-design.md",
+      "sha256": "187901bb165a43367fe3ae09e2589ab9569041ee8f8f2416e97f7c9486790c27",
+      "size": 13043
+    },
+    {
+      "path": "docs/superpowers/specs/2026-10-09-coco-tobacco-training-protocol-design.md",
+      "sha256": "e9d96253694659395a4623753267f25392b4b6f4f9aa3195046b32a502ca2dd3",
+      "size": 11353
+    },
+    {
+      "path": "docs/superpowers/specs/2026-10-10-coco-tobacco-gpu-smoke-deployment-design.md",
+      "sha256": "60c24b9124d8f9cd39fd8b9a6432a0e09a853538e1ac047cc4945bd1b537e1a8",
+      "size": 17415
+    },
+    {
+      "path": "evaluate.py",
+      "sha256": "605cf5e5dbc4e43e38ae48a14e6bceebaa6e5fb712a1bd8677e9f609008643ef",
+      "size": 4926
+    },
+    {
+      "path": "lib/aslloss.py",
+      "sha256": "5cf8241439bfd153aa7aa09e1469b2cf6af7bc4af5d05a9ab3b2049f39aba234",
+      "size": 4461
+    },
+    {
+      "path": "lib/cutout.py",
+      "sha256": "02e6817892475c3f95750809aa8a9a5d95a345f9d6e9b729353c2a5be14a9e7a",
+      "size": 3238
+    },
+    {
+      "path": "lib/dataset.py",
+      "sha256": "70de69ae94d23dbab1b00b851edb9fbcd78f5a36a62969601dda225643317def",
+      "size": 2747
+    },
+    {
+      "path": "lib/evaluation_protocol.py",
+      "sha256": "24295379aca1383ace0feb3b8601bb96eb8527546382fc5c492196674f11ab71",
+      "size": 37733
+    },
+    {
+      "path": "lib/metrics.py",
+      "sha256": "43aca5d39e46c76c53841010ab10dea16ca58ddc79341fff2be0dbb65f52e5b0",
+      "size": 8135
+    },
+    {
+      "path": "lib/tobacco_dataset.py",
+      "sha256": "e0b9414d851b58da961f33fa78bcd49b034e69e879ce2d190c4813c8dce21ff1",
+      "size": 8895
+    },
+    {
+      "path": "lib/training_protocol.py",
+      "sha256": "b571ee425e52ccbab4e1a03289a9c0bcdd3c33bf252efc5e9a2d53b8015b6a0f",
+      "size": 10835
+    },
+    {
+      "path": "lib/utils.py",
+      "sha256": "2706c64fae07024df6b377b9baec75f63fe28e01fd93377cd8b2c3dcb5c3c988",
+      "size": 13606
+    },
+    {
+      "path": "models/__init__.py",
+      "sha256": "5b5b135fab81804163fc583c8074552c24f79ee319ef77ef5be94a5d0915d403",
+      "size": 830
+    },
+    {
+      "path": "models/factory.py",
+      "sha256": "c0a588f7ba2d2a387442126911580eaefc0702b6680a1b444cc3ac5714f10958",
+      "size": 1748
+    },
+    {
+      "path": "models/mlic.py",
+      "sha256": "0adf162db3b2f1dd511e0cba5eaa7cae1caaeb0d74fd308aca89eaea65d276d9",
+      "size": 4270
+    },
+    {
+      "path": "models/resnet.py",
+      "sha256": "ecff939129e0045ca231d1c80e6c397386a812c222e21fbb64c54bb169e03b6d",
+      "size": 9542
+    },
+    {
+      "path": "models/timm_models/__init__.py",
+      "sha256": "a799ab93724850a88436f4a7bd0cefda9e856c6e0ed0280ba6dd4b5404d73531",
+      "size": 66
+    },
+    {
+      "path": "models/timm_models/swin_transformer.py",
+      "sha256": "f9184a1214bdb5db91f62e1301bceca00e69311ebe03216c82ff6e0bdc42a85f",
+      "size": 27923
+    },
+    {
+      "path": "models/timm_models/util/features.py",
+      "sha256": "4f0a7bc7465bda34afe2b11731786d52f4fe62ada6464de7d4e9bbcc24926bf5",
+      "size": 12439
+    },
+    {
+      "path": "models/timm_models/util/fx_features.py",
+      "sha256": "6d2f730dd1defdfc95041f8b72046bab39123d46565a483130a281e0101b7581",
+      "size": 2928
+    },
+    {
+      "path": "models/timm_models/util/helpers.py",
+      "sha256": "70b6d80a53e7567034348b26ac04df65e8f43a9af42365ccf0d0248ab9957bf0",
+      "size": 23180
+    },
+    {
+      "path": "models/timm_models/util/hub.py",
+      "sha256": "64cb502f24818c37ebe9996e83ac432c79d1d6069da09dbef5066a6abdd48afa",
+      "size": 6159
+    },
+    {
+      "path": "models/timm_models/util/layers/__init__.py",
+      "sha256": "42351e3ae21964ec3ec9d2ec84b9ed26988ea15c385c209440b3b7e4c781235a",
+      "size": 2253
+    },
+    {
+      "path": "models/timm_models/util/layers/activations.py",
+      "sha256": "808612266c4f9c62553ccc7abf51e2780772ca5b14b3e0883fa392becfcf5eac",
+      "size": 4185
+    },
+    {
+      "path": "models/timm_models/util/layers/activations_jit.py",
+      "sha256": "e669ed7c024876aeec4fd031b6c8fa47af84fbb85ec9b517217c30e5cf33a7fa",
+      "size": 2619
+    },
+    {
+      "path": "models/timm_models/util/layers/activations_me.py",
+      "sha256": "95cc97c5588723da85c20f399e95cf00ee7be06bc94a4b1bc48e2bf5a8902bd7",
+      "size": 6104
+    },
+    {
+      "path": "models/timm_models/util/layers/adaptive_avgmax_pool.py",
+      "sha256": "9f0e37f53c506d52d13c2fd4cd4dadf59f25bfa804207cff32c8d6b78f575d85",
+      "size": 4008
+    },
+    {
+      "path": "models/timm_models/util/layers/attention_pool2d.py",
+      "sha256": "17c4d128cfaa42ae7e7b8534b087efb86534ec91e80a93521942188e258e0d67",
+      "size": 7048
+    },
+    {
+      "path": "models/timm_models/util/layers/blur_pool.py",
+      "sha256": "872c0d2efe006338eee1712f0f223bc775fde52bfc39bda2494d60bbd639fdbe",
+      "size": 1633
+    },
+    {
+      "path": "models/timm_models/util/layers/bottleneck_attn.py",
+      "sha256": "796022eea9a2f079a8364066e87213d6bfc1bfb59712cf99bcfa2d9af3d3ab04",
+      "size": 7052
+    },
+    {
+      "path": "models/timm_models/util/layers/cbam.py",
+      "sha256": "651e25603059c9887b0ad204da8513cbd3269266d5fa6c91b2256eaa55437f13",
+      "size": 4530
+    },
+    {
+      "path": "models/timm_models/util/layers/classifier.py",
+      "sha256": "e9898262313a09637b44b08ab3a7f9681963158797f34babf6c69f3d461d28de",
+      "size": 2285
+    },
+    {
+      "path": "models/timm_models/util/layers/cond_conv2d.py",
+      "sha256": "c890d58b6fcedd340e4c9ee079e3b212bf3dea7f7b3e21038c537800b5490f95",
+      "size": 5251
+    },
+    {
+      "path": "models/timm_models/util/layers/config.py",
+      "sha256": "857fd0ec8c3794b2c0678df75c839701bf792914ed4d35be7d05d602b0dc4df5",
+      "size": 3184
+    },
+    {
+      "path": "models/timm_models/util/layers/conv2d_same.py",
+      "sha256": "12749d92fc197b3d94b097074b319764b56651936222a67dc9222388aed5a0f1",
+      "size": 1532
+    },
+    {
+      "path": "models/timm_models/util/layers/conv_bn_act.py",
+      "sha256": "8ab503bf6e18e9873c428150196abbad1929db81125d1be3da37a2a51e8854fe",
+      "size": 1444
+    },
+    {
+      "path": "models/timm_models/util/layers/create_act.py",
+      "sha256": "8d8f1d6899280db5aed02fb1fd986180adbc6ede432367b56c4c2961cb79b97e",
+      "size": 5512
+    },
+    {
+      "path": "models/timm_models/util/layers/create_attn.py",
+      "sha256": "eccb285dc54718046c1625282f94503ec3350aab2b8a3d023a01c400a958346d",
+      "size": 3615
+    },
+    {
+      "path": "models/timm_models/util/layers/create_conv2d.py",
+      "sha256": "0b1f23dea383c0957ab708c955a3e17ec0547f8e956130c7d07c8dead0dcac60",
+      "size": 1531
+    },
+    {
+      "path": "models/timm_models/util/layers/create_norm_act.py",
+      "sha256": "8ac91d5d2a19aeaf1f0d302aeca1a9d94d5f7ce0a091c6203a6bb7a3cd1125e7",
+      "size": 3533
+    },
+    {
+      "path": "models/timm_models/util/layers/drop.py",
+      "sha256": "9fbd773cae146aca623fb19a2f5a0c86191c7069851461dbc253ec7f6a5fb69a",
+      "size": 6896
+    },
+    {
+      "path": "models/timm_models/util/layers/eca.py",
+      "sha256": "23fbb16dc25b2ea42469df9909411626073ea61bd99a326166941b6bf05b751d",
+      "size": 6531
+    },
+    {
+      "path": "models/timm_models/util/layers/evo_norm.py",
+      "sha256": "2b27385a51a018e0db059fb26e01497a7fd187e1284206089802177046951f8e",
+      "size": 3600
+    },
+    {
+      "path": "models/timm_models/util/layers/gather_excite.py",
+      "sha256": "855d11a66f6e79419fdbcdb13242dd61dfe3d88240187f85e9baeae7cb000319",
+      "size": 3914
+    },
+    {
+      "path": "models/timm_models/util/layers/global_context.py",
+      "sha256": "579f87b0213ee3f755d3fd118c6f1508e37f69968e2e0e0ba6ebef5a7d9daf6e",
+      "size": 2512
+    },
+    {
+      "path": "models/timm_models/util/layers/halo_attn.py",
+      "sha256": "50b5fb3f4dd83e29d481764006806b67d46d7d0447dd71ff59f7bab6b57df452",
+      "size": 10895
+    },
+    {
+      "path": "models/timm_models/util/layers/helpers.py",
+      "sha256": "b5aabf6554035fdd714f9e1a7db4401871885be5682700f1b4460488ca6e5823",
+      "size": 779
+    },
+    {
+      "path": "models/timm_models/util/layers/inplace_abn.py",
+      "sha256": "9f494f60bd3456755ca769e3c4c5a190a62e92f266f43bcff2b3b3db6708a3c2",
+      "size": 3440
+    },
+    {
+      "path": "models/timm_models/util/layers/lambda_layer.py",
+      "sha256": "27cc6dd8abdf8bffdcd214887e3a03a3d7331044107130c2dae4450e04b1cdeb",
+      "size": 6074
+    },
+    {
+      "path": "models/timm_models/util/layers/linear.py",
+      "sha256": "11dd05cdb693918cd42989c407b59475bef98170d6bbcb7b62729589aced4004",
+      "size": 762
+    },
+    {
+      "path": "models/timm_models/util/layers/median_pool.py",
+      "sha256": "19f4a494d5abb1149a8135f44f98b73ec3f637a465a729fae7abe5b97aa63920",
+      "size": 1786
+    },
+    {
+      "path": "models/timm_models/util/layers/mixed_conv2d.py",
+      "sha256": "42deb40adeefba17f3aa5d748ef5f89618f7c8efad13cf1906081d5e2466556d",
+      "size": 1894
+    },
+    {
+      "path": "models/timm_models/util/layers/mlp.py",
+      "sha256": "387218a3a5a48b38e2391e0f94e8f03a0ee6f5a52b68739448bc4bad7f5275ab",
+      "size": 4216
+    },
+    {
+      "path": "models/timm_models/util/layers/non_local_attn.py",
+      "sha256": "cac9bc63b535a43b0d8115c6fb74d3606b3f3238fb12b2b874143c8f3a65e21d",
+      "size": 6354
+    },
+    {
+      "path": "models/timm_models/util/layers/norm.py",
+      "sha256": "e4ad393389fbf7a17d64e2397e1e138061b3b1cc0cd4374d708b57549760d39d",
+      "size": 900
+    },
+    {
+      "path": "models/timm_models/util/layers/norm_act.py",
+      "sha256": "8fc5563679300784ad96683b932d9bbf750d4b47ececeb5b892b6feea6d0d59c",
+      "size": 3630
+    },
+    {
+      "path": "models/timm_models/util/layers/padding.py",
+      "sha256": "781780209e646eeabeeeda22a48e064194aee953194b4e9ca8e22d9b97048434",
+      "size": 2223
+    },
+    {
+      "path": "models/timm_models/util/layers/patch_embed.py",
+      "sha256": "0e706f7222fa545140616423c7405e741e5af4b7e3f6c65510f5b1a6f3cfd482",
+      "size": 1529
+    },
+    {
+      "path": "models/timm_models/util/layers/pool2d_same.py",
+      "sha256": "407d2f3ca402bf78379dc5ef0e234165d0cf2435acbf996f0ef079fe210d4362",
+      "size": 3118
+    },
+    {
+      "path": "models/timm_models/util/layers/selective_kernel.py",
+      "sha256": "62ecda4c1fc1874b265c79caf3c0f1a354f92634e271190a2960467f2148e6af",
+      "size": 5469
+    },
+    {
+      "path": "models/timm_models/util/layers/separable_conv.py",
+      "sha256": "68275342d4de42bb05bf37af2252cde156969cb49ab0bc1c67ee85210a7e0f04",
+      "size": 2601
+    },
+    {
+      "path": "models/timm_models/util/layers/space_to_depth.py",
+      "sha256": "8e5b81ad57537954123dbdc8341216408a9a1caf15cf2c91892667b8bdafbc5c",
+      "size": 1803
+    },
+    {
+      "path": "models/timm_models/util/layers/split_attn.py",
+      "sha256": "58d01d7365f7ab32f973a8a9789f65e769819a14c4834bd81386f9e464069b34",
+      "size": 3170
+    },
+    {
+      "path": "models/timm_models/util/layers/split_batchnorm.py",
+      "sha256": "7e914c2012991500f5a707d89d5705d5c21ebffdaf4a85090cfaa9b052b80538",
+      "size": 3516
+    },
+    {
+      "path": "models/timm_models/util/layers/squeeze_excite.py",
+      "sha256": "63bd333d5dc1eef6129d83786224fd740066e6a3711428ac45ca961cbe93fb4b",
+      "size": 3092
+    },
+    {
+      "path": "models/timm_models/util/layers/std_conv.py",
+      "sha256": "a437f5c8cf6b93a71929e1c1e8ecf34ca744241b73c4e90c07ab7ae5f60ed4df",
+      "size": 6020
+    },
+    {
+      "path": "models/timm_models/util/layers/test_time_pool.py",
+      "sha256": "89da4e8321884100a9378488b3c8b2952ba353a69634a77f88ef223c312357c6",
+      "size": 2047
+    },
+    {
+      "path": "models/timm_models/util/layers/trace_utils.py",
+      "sha256": "7fdc460a6f6978e787f6af89ae667db46879e6d6895fb2244e9ed8daea659da7",
+      "size": 348
+    },
+    {
+      "path": "models/timm_models/util/layers/weight_init.py",
+      "sha256": "3a278f98c58dfce5d4c33274e8147f4e14292b001f536916814d72a791af769f",
+      "size": 3413
+    },
+    {
+      "path": "models/timm_models/vision_transformer.py",
+      "sha256": "862f25962f37f7c712969f196d5be617b5dbf390a7dfd1ca0c00b747471420dc",
+      "size": 25343
+    },
+    {
+      "path": "models/tresnet/__init__.py",
+      "sha256": "32cdea0ca28859caf512c42441830cb182fd39a31d9d3cae04a4d0c0f19b9f8d",
+      "size": 143
+    },
+    {
+      "path": "models/tresnet/layers/anti_aliasing.py",
+      "sha256": "a59469ef0f496b98c6eec11a8fff459082369c472168345a352eab8d0d6e9b00",
+      "size": 2171
+    },
+    {
+      "path": "models/tresnet/layers/avg_pool.py",
+      "sha256": "216a3a1e3b586eca876da087d4b04e3fedae781958cb5aefad19fb07cdd53037",
+      "size": 926
+    },
+    {
+      "path": "models/tresnet/layers/general_layers.py",
+      "sha256": "3ddd5a78c195fcc8bbcea96a3432076b9253a210d1c20049ddb3dbc3d9b5520d",
+      "size": 3066
+    },
+    {
+      "path": "models/tresnet/layers/space_to_depth.py",
+      "sha256": "3de5d995b6a537f46c71c68f81a00f26603fcee2b8988a54899b1b1c534b335c",
+      "size": 1821
+    },
+    {
+      "path": "models/tresnet/layers/squeeze_and_excite.py",
+      "sha256": "8af2548c4aa100a9f6251eef531d9b8073bd8ef652f0f7eeb6773aa0993de7f7",
+      "size": 1264
+    },
+    {
+      "path": "models/tresnet/tresnet.py",
+      "sha256": "c1022faaff0013c6eb87ccd2558aefb8bf58f6151b803561a09b2d1f95eaa05e",
+      "size": 10071
+    },
+    {
+      "path": "models/tresnet/tresnet21k.py",
+      "sha256": "4818dcc6ece242450caced2b563eb16c23eafc05f26267f1168dbffd6ee173d9",
+      "size": 10040
+    },
+    {
+      "path": "models/tresnet/tresnetv2.py",
+      "sha256": "e8901eb43b52077f4882f97c540c699bb71da0d3a94fc9ee98b19e91cce3e8b8",
+      "size": 10396
+    },
+    {
+      "path": "models/utils.py",
+      "sha256": "6b186a92e34b8aaf5f0c27204991429f33bbca5cb65637ba90a5dbc493cffc47",
+      "size": 15931
+    },
+    {
+      "path": "scripts/build_deployment_package.py",
+      "sha256": "32bd535787b51dc84bba44e0dd7d17e2b073a61f308a463b64431e511c4f0b39",
+      "size": 8602
+    },
+    {
+      "path": "scripts/mscoco.py",
+      "sha256": "7932bae0fc0cff087ee0bdeff19af463c77d12ac9eac4c2c87867e4db7a1caf4",
+      "size": 1847
+    },
+    {
+      "path": "scripts/nuswide.py",
+      "sha256": "fd00ca7aae3bcc29ab130a8384d19ecc86d1254a543e6b35622fc70881fc0659",
+      "size": 2764
+    },
+    {
+      "path": "scripts/smoke_tobacco_coco.py",
+      "sha256": "8f5b348be437456841ff37d966cccdbb1dfb2a2fc758a6ba8e9175bd6d5441a8",
+      "size": 25656
+    },
+    {
+      "path": "scripts/ssgrl_count.py",
+      "sha256": "362eb3f1ae1a09739b445670496caf888c993aabac147dcfd740554b05c2e5ae",
+      "size": 1504
+    },
+    {
+      "path": "scripts/vg500.py",
+      "sha256": "a5e06e91ba9423c633fc0464c4410e378e83ae8e3d19b605d1b6ebab24b45df8",
+      "size": 2286
+    },
+    {
+      "path": "scripts/voc2007.py",
+      "sha256": "de823dea55229356902b52169a24a8098d81c0111b659cd40945498e59937f48",
+      "size": 3152
+    },
+    {
+      "path": "tests/test_coco_contrastive.py",
+      "sha256": "e11dc0a2e8d83d8fdda0d05ec8442117b170c2a222d127f543d347bba9c72023",
+      "size": 10464
+    },
+    {
+      "path": "tests/test_deployment_package.py",
+      "sha256": "582e7ae5eb0ee495cf0c96cc73ba0bc0ab120cb75c986a27575982388e333436",
+      "size": 11120
+    },
+    {
+      "path": "tests/test_evaluation_protocol.py",
+      "sha256": "6764483f3b6f2e7000f6d4ddb270e658e97312f27736ae2aef9020d649591856",
+      "size": 34046
+    },
+    {
+      "path": "tests/test_smoke_tobacco_coco.py",
+      "sha256": "613f338aaf9f7615f6843cb0e035718e1b1bedbe4d00c3cdf890ff1856500788",
+      "size": 19119
+    },
+    {
+      "path": "tests/test_tobacco_dataset.py",
+      "sha256": "5b923a52d57cc6eab1c46e2c46879839341e082537d6dc84efedd5970f792446",
+      "size": 12722
+    },
+    {
+      "path": "tests/test_training_protocol.py",
+      "sha256": "b4d0874476db10224e92bbd8a82acee894e4135347ca6aedf145bb585bf0a693",
+      "size": 25078
+    },
+    {
+      "path": "train.py",
+      "sha256": "f2bc689cbcac53f7b00294708c525971f1c76a928a6e3d07bdcbe77884e2e141",
+      "size": 8904
+    }
+  ],
+  "format_version": 1,
+  "package_kind": "coco-tobacco-task6a-source-snapshot"
+}

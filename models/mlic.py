@@ -51,7 +51,7 @@ class MLIC(nn.Module):
         _x = torch.cat([x, ax], dim=-1)
         logits = self.fc(_x)
         
-        loss = bce = ctr = 0.0
+        bce = ctr = logits.new_zeros(())
         if self.training:
             if self.cfg.lamda != 0:
                 masks = torch.bmm(y.unsqueeze(-1), y.unsqueeze(1))
@@ -60,9 +60,12 @@ class MLIC(nn.Module):
                 with torch.no_grad():
                     px, _ = self.encoder(x, posi_weights)
                     nx, _ = self.encoder(x, nega_weights)
-            
+
+                valid_samples = 0
                 for i in range(x.shape[0]):
                     _y = y[i]
+                    if _y.sum() <= 0:
+                        continue
                     p_ax = ax[i][_y == 1, :]
                     n_ax = ax[i][_y == 0, :]
                     p_px = px[i][_y == 1, :]
@@ -79,11 +82,13 @@ class MLIC(nn.Module):
                     aap_logits = aap_logits.flatten()[1:].view(n - 1, n + 1)[:, :-1].reshape(n, n - 1)  # remove diagonal elements
                     ctr_logits = torch.cat([ctr_logits, aap_logits], dim=-1)
 
-                    targets = torch.tensor([0] * ctr_logits.shape[0], dtype=torch.long).cuda()
+                    targets = torch.zeros(ctr_logits.shape[0], dtype=torch.long, device=ctr_logits.device)
                     nce = nn.CrossEntropyLoss()(ctr_logits, targets)
-                    ctr += nce
-                    
-                ctr /= x.shape[0]
+                    ctr = ctr + nce
+                    valid_samples += 1
+
+                if valid_samples > 0:
+                    ctr = ctr / valid_samples
 
             bce = self.criterion(logits, y)
             

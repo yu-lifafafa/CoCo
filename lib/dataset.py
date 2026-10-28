@@ -18,6 +18,19 @@ from .cutout import CutoutPIL, SLCutoutPIL
 logger = logging.getLogger(__name__)
 
 
+def build_coco_transform(cfg, training):
+    t = []
+    t.append(transforms.Resize((cfg.img_size, cfg.img_size)))
+    if training:
+        t.append(transforms.RandomHorizontalFlip())
+        t.append(CutoutPIL())
+        t.append(RandAugment())
+    t.append(transforms.ToTensor())
+    t.append(transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]))
+
+    return transforms.Compose(t)
+
+
 class GaussianBlur(object):
     """Gaussian blur augmentation from SimCLR: https://arxiv.org/abs/2002.05709"""
 
@@ -49,16 +62,7 @@ class MLDataset(Dataset):
         logger.info(self.transform)
 
     def get_transform(self, training):
-        t = []
-        t.append(transforms.Resize((self.cfg.img_size, self.cfg.img_size)))
-        if training:
-            t.append(transforms.RandomHorizontalFlip())
-            t.append(CutoutPIL())
-            t.append(RandAugment())
-        t.append(transforms.ToTensor())
-        t.append(transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]))
-        
-        return transforms.Compose(t)
+        return build_coco_transform(self.cfg, training)
 
     def __getitem__(self, index):
         img_path, img_label = self.data[index]

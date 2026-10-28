@@ -47,7 +47,11 @@ class VOCmAP(object):
             self._voc_ap = self._voc12_ap
         else:
             raise Exception('year should be 2007 or 2012!')
-        self.ignore = np.load(ignore_path) if os.path.exists(ignore_path) else None
+        self.ignore = (
+            np.load(ignore_path)
+            if ignore_path is not None and os.path.exists(ignore_path)
+            else None
+        )
 
     def reset(self):
         self.scores = np.array([], dtype=np.float64).reshape(0, self.num_classes)
@@ -219,4 +223,3 @@ class ThresholdMeter(Meter):
             self._gt_num[i] = np.sum(target)
             self._pd_num[i] = np.sum(score >= self.threshold)
             self._tp_num[i] = np.sum(target * (score >= self.threshold))
-        

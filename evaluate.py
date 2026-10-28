@@ -6,9 +6,7 @@
 # Copyright © 2022 - CPSS Group
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 import os
-import yaml
 import argparse
-from argparse import Namespace
 from tqdm import tqdm
 
 import torch
@@ -17,8 +15,16 @@ from torch.utils.data import DataLoader
 from models.factory import create_model
 from lib.metrics import *
 from lib.dataset import MLDataset
+from lib.evaluation_protocol import run_test_evaluation, run_val_calibration
+from lib.utils import load_config
 
 torch.backends.cudnn.benchmark = True
+
+
+def _normalize_legacy_state_dict(model_dict):
+    if model_dict and list(model_dict.keys())[0].startswith('module'):
+        return {k[7:]: v for k, v in model_dict.items()}
+    return model_dict
 
 
 class Evaluator(object):
@@ -39,8 +45,7 @@ class Evaluator(object):
     @torch.no_grad()
     def run(self):
         model_dict = torch.load(self.cfg.ckpt_ema_best_path)
-        if list(model_dict.keys())[0].startswith('module'):
-            model_dict = {k[7:]: v for k, v in model_dict.items()}
+        model_dict = _normalize_legacy_state_dict(model_dict)
         self.model.load_state_dict(model_dict)
         print('loading best checkpoint success')
         
@@ -71,20 +76,44 @@ class Evaluator(object):
         print('              OP: {:4f}, OR: {:4f}, OF1: {:4F}'.format(self.topk_meter.op, self.topk_meter.or_, self.topk_meter.of1))
 
 
-if __name__ == "__main__":
+def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('--exp-dir', type=str, default='experiments/mlic11_voc2007/exp1')
     parser.add_argument('--batch-size', type=int, default=128)
     parser.add_argument('--threshold', type=float, default=0.5)
-    args = parser.parse_args()
+    parser.add_argument(
+        '--operation',
+        choices=('legacy', 'val-calibration', 'test-evaluation'),
+        default='legacy',
+    )
+    parser.add_argument('--output-root', type=str, default='outputs/tobacco_coco')
+    parser.add_argument('--thresholds-path', type=str, default=None)
+    parser.add_argument('--device', type=str, default='cuda')
+    args = parser.parse_args(argv)
     cfg_path = os.path.join(args.exp_dir, 'config.yaml')
     if not os.path.exists(cfg_path):
         raise FileNotFoundError('config file not found in the {}!'.format(cfg_path))
-    cfg = yaml.load(open(cfg_path, 'r'))
-    cfg = Namespace(**cfg)
+    cfg = load_config(cfg_path)
     cfg.batch_size = args.batch_size
     cfg.threshold = args.threshold
+    cfg.evaluation_device = args.device
     print(cfg)
-    
+
+    if args.operation == 'val-calibration':
+        if cfg.data != 'tobacco':
+            raise ValueError('val-calibration is available only for tobacco')
+        return run_val_calibration(cfg, args.output_root)
+    if args.operation == 'test-evaluation':
+        if cfg.data != 'tobacco':
+            raise ValueError('test-evaluation is available only for tobacco')
+        thresholds_path = args.thresholds_path or os.path.join(
+            args.output_root, 'calibration', 'thresholds.json'
+        )
+        return run_test_evaluation(cfg, args.output_root, thresholds_path)
+
     evaluator = Evaluator(cfg)
-    evaluator.run()
+    return evaluator.run()
+
+
+if __name__ == "__main__":
+    main()

@@ -13,6 +13,7 @@ import random
 import argparse
 import logging
 import numpy as np
+import yaml
 from PIL import ImageDraw
 from copy import deepcopy
 
@@ -195,15 +196,45 @@ def check_exists(filepath):
 
 def prepare_env(args, argv):
     # prepare data config
-    cfg = vars(args)
-    cfg['train_path'] = join('data', args.data, 'train.txt')
-    cfg['test_path'] = join('data', args.data, 'test.txt')
-    cfg['label_path'] = join('data', args.data, 'label.txt')
-    cfg['ignore_path'] = join('data', args.data, 'ignore.npy')
-    check_exists(cfg['train_path'])
-    check_exists(cfg['test_path'])
-    check_exists(cfg['label_path'])
-    cfg['num_classes'] = len(open(cfg['label_path']).readlines())
+    cfg = dict(vars(args))
+    if args.data == 'tobacco':
+        from .training_protocol import (
+            TOBACCO_NUM_CLASSES,
+            sha256_file,
+            tobacco_label_mapping,
+        )
+
+        if not args.manifest_path:
+            raise ValueError('manifest path is required for tobacco')
+        if not os.path.isfile(args.manifest_path):
+            raise FileNotFoundError('manifest file not found: {}'.format(args.manifest_path))
+        if not args.data_root:
+            raise ValueError('data root is required for tobacco')
+        if not os.path.isdir(args.data_root):
+            raise FileNotFoundError('data root directory not found: {}'.format(args.data_root))
+        cfg.update({
+            'dataset': 'tobacco',
+            'task': 'multilabel_classification',
+            'num_classes': TOBACCO_NUM_CLASSES,
+            'excluded_source_class_id': 13,
+            'selection_split': 'val',
+            'selection_metric': 'mAP',
+            'selection_variant': 'ema',
+            'metric_implementation': 'VOC2012',
+            'label_mapping': tobacco_label_mapping(),
+            'manifest_sha256': sha256_file(args.manifest_path),
+            'ignore_path': None,
+        })
+    else:
+        cfg['train_path'] = join('data', args.data, 'train.txt')
+        cfg['test_path'] = join('data', args.data, 'test.txt')
+        cfg['label_path'] = join('data', args.data, 'label.txt')
+        cfg['ignore_path'] = join('data', args.data, 'ignore.npy')
+        check_exists(cfg['train_path'])
+        check_exists(cfg['test_path'])
+        check_exists(cfg['label_path'])
+        with open(cfg['label_path'], encoding='utf-8') as label_file:
+            cfg['num_classes'] = len(label_file.readlines())
 
     # prepare checkpoint and log config
     exp_home = join('experiments', '{}_{}'.format(args.model, args.data))
@@ -215,6 +246,7 @@ def prepare_env(args, argv):
     cfg['ckpt_dir'] = join(exp_dir, 'checkpoints')
     cfg['ckpt_best_path'] = join(cfg['ckpt_dir'], 'best_model.pth')
     cfg['ckpt_ema_best_path'] = join(cfg['ckpt_dir'], 'best_ema_model.pth')
+    cfg['ckpt_best_info_path'] = join(cfg['ckpt_dir'], 'best_checkpoint_info.json')
     check_makedir(cfg['exp_dir'])
     check_makedir(cfg['ckpt_dir'])
 
@@ -226,9 +258,8 @@ def prepare_env(args, argv):
 
     # save config
     cfg_path = join(cfg['exp_dir'], 'config.yaml')
-    with open(cfg_path, 'w') as fw:
-        for k, v in cfg.items():
-            fw.write('{}: {}\n'.format(k, v))
+    with open(cfg_path, 'w', encoding='utf-8') as fw:
+        yaml.safe_dump(cfg, fw, sort_keys=False, allow_unicode=True)
 
     cfg['log_path'] = join(exp_dir, 'train.log')
     cfg = argparse.Namespace(**cfg)
@@ -245,6 +276,14 @@ def prepare_env(args, argv):
     logger.info(format_string)
 
     return cfg
+
+
+def load_config(config_path):
+    with open(config_path, 'r', encoding='utf-8') as handle:
+        cfg = yaml.safe_load(handle)
+    if not isinstance(cfg, dict):
+        raise ValueError('configuration must contain a mapping')
+    return argparse.Namespace(**cfg)
 
 
 def get_logger(log_path, name, level=logging.INFO):
@@ -302,6 +341,8 @@ def get_args(parsing=True):
     parser.add_argument('--model', type=str, default='mlic')
     parser.add_argument('--arch', type=str, default='resnet101')
     parser.add_argument('--data', type=str, default='voc2007')
+    parser.add_argument('--manifest-path', type=str, default=None)
+    parser.add_argument('--data-root', type=str, default=None)
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--lr', type=float, default=0.0001)
     parser.add_argument('--optimizer', type=str, default='AdamW')

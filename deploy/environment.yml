@@ -1,0 +1,17 @@
+name: coco-tobacco
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - numpy
+  - scipy
+  - pillow
+  - scikit-learn
+  - pyyaml
+  - tqdm
+  - tensorboard
+  - pytest
+  - pip:
+      - randaugment
+      - timm

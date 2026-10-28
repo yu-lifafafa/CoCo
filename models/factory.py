@@ -8,6 +8,7 @@
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 _model_entrypoints = {}
 _backbone_entrypoints = {}
+_unavailable_backbones = {}
 
 
 def register_model(fn):
@@ -32,14 +33,27 @@ def register_backbone(feat_dim):
     def wrapper(fn):
         backbone_name = fn.__name__
         _backbone_entrypoints[backbone_name] = (fn, feat_dim)
+        _unavailable_backbones.pop(backbone_name, None)
         return fn
     return wrapper
 
+
+def register_unavailable_backbones(backbone_names, dependency, error):
+    """Record optional backbones whose import dependency is unavailable."""
+    for backbone_name in backbone_names:
+        _unavailable_backbones[backbone_name] = (dependency, error)
+
+
 def backbone_entrypoint(bb_name):
+    if bb_name in _unavailable_backbones:
+        dependency, error = _unavailable_backbones[bb_name]
+        raise RuntimeError(
+            f"Backbone '{bb_name}' requires optional dependency '{dependency}'"
+        ) from error
     return _backbone_entrypoints[bb_name]
 
 
 def create_backbone(bb_name, **kwargs):
-    create_fn, feat_dim = _backbone_entrypoints[bb_name]
+    create_fn, feat_dim = backbone_entrypoint(bb_name)
     backbone = create_fn(True, **kwargs)
     return backbone, feat_dim
